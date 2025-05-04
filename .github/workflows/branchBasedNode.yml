@@ -1,0 +1,40 @@
+name: CI/CD Pipeline
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+        
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                node-version: 18
+                
+            - name: Install Dependencies
+              run: npm install
+              
+            - name: Run Linter
+              run: npx eslint .
+
+            - name: Run Tests
+              run: npm Test 
+              
+              
+    deploy:
+        if: github.ref == 'refs/heads/main'
+        needs: build
+        runs-on: ubuntu-latest
+        
+        steps: 
+          - name: Deployment step
+            run: echo "Deploying to production"
