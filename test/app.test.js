@@ -1,10 +1,10 @@
-const express = require('express');
-const app = express();
+const request = require('supertest');
+const app= require('../index');
 
 describe('GET /', ()=>{
     it('responds with Hello from Branch Based CI', async()=>{
            const res = await request(app).get('/');
            expect(res.statusCode).toBe(200);
-           expet(res.text).toBe("Hello from Branch Based CI") 
+           expect(res.text).toBe("Hello from Branch Based CI") 
     }
 )})
